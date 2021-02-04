@@ -1,16 +1,22 @@
 import React from 'react';
 import { useMachine } from '@xstate/react';
-import toggleMachine from '../../stores/toggle-store';
+import { toggleMachine } from '../../machine';
 
 const Toggle = () => {
-  const [current, send] = useMachine(toggleMachine);
-
-  console.log(current);
+  const [state, send] = useMachine(toggleMachine);
 
   return (
-    <button onClick={() => send('TOGGLE')}>
-      {current.matches('inactive') ? 'Off' : 'On'}
-    </button>
+    <div>
+      <button onClick={() => send('TOGGLE')}>toggle</button>
+      <div>
+        <strong>toggle times: </strong>
+        {state.context.times}
+      </div>
+      <div>
+        <strong>current state: </strong>
+        {state.value}
+      </div>
+    </div>
   );
 };
 
